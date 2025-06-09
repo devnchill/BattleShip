@@ -1,4 +1,4 @@
-import DomController from "../Ui/DomController";
+import DomController from "./DomController";
 
 class GameController {
   constructor(private dom: DomController) {}
