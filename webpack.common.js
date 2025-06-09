@@ -6,7 +6,7 @@ module.exports = {
     app: "./src/index.ts",
   },
   resolve: {
-    extensions: [".ts", ".js"], // <-- Add this block
+    extensions: [".ts", ".js"],
   },
   plugins: [
     new HtmlWebpackPlugin({

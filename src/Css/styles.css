@@ -61,11 +61,32 @@ body {
     & > i {
       position: absolute;
       right: 1rem;
+      cursor: pointer;
     }
   }
 
   & > main {
     grid-area: main;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    & > .gameboard {
+      display: flex;
+      flex-direction: column;
+      width: 500px;
+      height: 500px;
+      & > .grid-row {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 10%;
+        & > .grid-cell {
+          width: 10%;
+          height: 100%;
+          border: 2px solid white;
+        }
+      }
+    }
   }
 
   & > footer {
