@@ -1,7 +1,7 @@
-const dialog = document.querySelector("dialog");
-dialog?.showModal();
-dialog?.addEventListener("close", () => {
-  console.log(
-    (document.getElementById("name-input") as HTMLInputElement).value.trim(),
-  );
-});
+import DomController from "./Ui/DomController";
+import GameController from "./Core/GameController";
+
+const dom = new DomController();
+const game = new GameController(dom);
+
+game.start();
