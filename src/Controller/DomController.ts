@@ -60,19 +60,19 @@ class DomController {
   }
 
   private placeAiBoard(): void {
-    this.aiDomBoard.resetDomBoard();
     if (!DomController.MAIN) {
       throw new Error("Main Not Found");
     }
     DomController.MAIN.appendChild(this.aiDomBoard.createBoard());
+    this.aiDomBoard.resetDomBoard();
   }
 
   private placeHumanBoard(): void {
-    this.humanDomBoard.resetDomBoard();
     if (!DomController.MAIN) {
       throw new Error("Main Not Found");
     }
     DomController.MAIN.appendChild(this.humanDomBoard.createBoard());
+    this.humanDomBoard.resetDomBoard();
   }
 
   syncBoards(humanLogicBoard: ICell[][], aiLogicBoard: ICell[][]): void {
