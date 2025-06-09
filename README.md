@@ -1,2 +1,1 @@
-# TSTemplate
-A template repo for jump start to project without the need to setup environment everytime.
+Music by <a href="https://pixabay.com/users/soulprodmusic-30064790/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=124265">Oleg Fedak</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=124265">Pixabay</a>
