@@ -1,5 +1,6 @@
 import bgAudio from "../audio/bg.mp3";
 import { ICell } from "../Types/GameBoard.Types";
+import PlayerType from "../Types/Player.Types";
 import DomBoard from "../Ui/DomBoard";
 class DomController {
   private static MAIN: HTMLElement | null = document.querySelector("main");
@@ -12,8 +13,8 @@ class DomController {
     this.speakerIcon = document.querySelector(".music-toggle-icon");
     this.audio = new Audio(bgAudio);
     this.audio.loop = true;
-    this.humanDomBoard = new DomBoard();
-    this.aiDomBoard = new DomBoard();
+    this.humanDomBoard = new DomBoard(PlayerType.HUMAN);
+    this.aiDomBoard = new DomBoard(PlayerType.AI);
     this.attachMusicToggle();
     this.placeHumanBoard();
     this.placeAiBoard();

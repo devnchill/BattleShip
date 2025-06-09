@@ -1,9 +1,12 @@
 import { CellState, ICell } from "../Types/GameBoard.Types";
+import PlayerType from "../Types/Player.Types";
 
 class DomBoard {
   private board: HTMLDivElement;
+  private playerType: PlayerType;
 
-  constructor() {
+  constructor(playerType: PlayerType) {
+    this.playerType = playerType;
     this.board = document.createElement("div");
     this.board.classList.add("domboard");
     this.registerEvents();
@@ -21,6 +24,13 @@ class DomBoard {
         row.appendChild(cell);
       }
       this.board.appendChild(row);
+    }
+    this.board.classList.add("gameboard");
+    if (this.playerType == PlayerType.HUMAN) {
+      this.board.classList.add("human-board");
+    } else {
+      this.board.classList.add("ai-board");
+      this.board.style.pointerEvents = "none";
     }
     return this.board;
   }
