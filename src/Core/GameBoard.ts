@@ -1,6 +1,6 @@
 import { CellState } from "../Types/GameBoard.Types";
 import { ICell, Coor } from "../Types/GameBoard.Types";
-import generateShipCoordinates from "../Util/CoorGenerator";
+import { generateShipCoordinates } from "../Util/CoorGenerator";
 import validate from "../Util/Validator";
 import { Ship } from "./Ship";
 
@@ -80,5 +80,15 @@ export default class GameBoard {
    */
   get board(): ICell[][] {
     return this._board;
+  }
+
+  resetLogicalBoard(): void {
+    this._board.forEach((row: ICell[]): void => {
+      row.forEach((cell: ICell): void => {
+        cell.hasShip = false;
+        cell.ship = undefined;
+        cell.state = CellState.UNTOUCHED;
+      });
+    });
   }
 }

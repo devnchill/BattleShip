@@ -59,20 +59,30 @@ class DomController {
   }
 
   private placeAiBoard(): void {
+    this.aiDomBoard.resetDomBoard();
     if (!DomController.MAIN) {
       throw new Error("Main Not Found");
     }
     DomController.MAIN.appendChild(this.aiDomBoard.createBoard());
   }
+
   private placeHumanBoard(): void {
+    this.humanDomBoard.resetDomBoard();
     if (!DomController.MAIN) {
       throw new Error("Main Not Found");
     }
     DomController.MAIN.appendChild(this.humanDomBoard.createBoard());
   }
 
-  syncBoards(humanLogicBoard: ICell[][], aiLogicBoard: ICell[][]) {
+  syncBoards(humanLogicBoard: ICell[][], aiLogicBoard: ICell[][]): void {
     this.humanDomBoard.syncBoard(humanLogicBoard);
+    this.aiDomBoard.syncBoard(aiLogicBoard);
+  }
+
+  syncHumanBoard(humanLogicBoard: ICell[][]): void {
+    this.humanDomBoard.syncBoard(humanLogicBoard);
+  }
+  syncAiBoard(aiLogicBoard: ICell[][]): void {
     this.aiDomBoard.syncBoard(aiLogicBoard);
   }
 }

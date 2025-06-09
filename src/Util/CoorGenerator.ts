@@ -10,7 +10,7 @@ import { Coor } from "../Types/GameBoard.Types";
  * @param orientation - The orientation of the ship (HORIZONTAL or VERTICAL).
  * @returns An array of coordinates that the ship would occupy.
  */
-export default function generateShipCoordinates(
+function generateShipCoordinates(
   start: Coor,
   length: number,
   orientation: ShipOrientation,
@@ -28,3 +28,9 @@ export default function generateShipCoordinates(
 
   return coords;
 }
+
+function randomCoor(): Coor {
+  return [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+}
+
+export { generateShipCoordinates, randomCoor };

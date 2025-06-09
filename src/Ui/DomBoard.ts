@@ -51,6 +51,21 @@ class DomBoard {
     }
   }
 
+  resetDomBoard(): void {
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        const cell = this.board.querySelector(
+          `.grid-cell[data-x="${j}"][data-y="${i}"]`,
+        ) as HTMLDivElement;
+        if (!cell) {
+          throw new Error(`Cell at x:${i} y:${j} not found`);
+        }
+        cell.classList.remove("ship", "hit", "miss");
+        cell.classList.add("untouched");
+      }
+    }
+  }
+
   registerEvents(): void {
     this.board.addEventListener("click", (e) => {
       const target = e.target as HTMLElement;

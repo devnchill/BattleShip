@@ -55,6 +55,13 @@ export class Ship {
   }
 
   /**
+   * Sets the orientation of the ship.
+   */
+  set orientation(value: ShipOrientation) {
+    this._orientation = value;
+  }
+
+  /**
    * Toggles the orientation of the ship between horizontal and vertical.
    */
   toggleOrientation(): void {
