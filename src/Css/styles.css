@@ -1,6 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import "./reboot.css";
+
+* {
+  font-family:
+    "Roboto", "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  i {
+    color: white;
+  }
+}
 html,
 body {
   height: 100%;
   width: 100%;
+  background-color: black;
+  color: white;
+}
+
+body {
+  dialog {
+    border: 2px solid white;
+    border-radius: 1rem;
+    background-color: black;
+    color: white;
+    & > form {
+      div > * {
+        display: block;
+        margin: 1rem;
+      }
+      & > button {
+        min-width: 100%;
+      }
+    }
+  }
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-rows: 5% 1fr 5%;
+
+  .flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .big-and-bold {
+    font-size: 1.5rem;
+    font-weight: bolder;
+  }
+
+  & > header {
+    grid-area: header;
+    position: relative;
+    & > h1 {
+      text-align: center;
+      border-bottom: 0.3rem solid white;
+    }
+    & > i {
+      position: absolute;
+      right: 1rem;
+    }
+  }
+
+  & > main {
+    grid-area: main;
+  }
+
+  & > footer {
+    grid-area: footer;
+    gap: 1rem;
+  }
 }

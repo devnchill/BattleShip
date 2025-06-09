@@ -9,6 +9,7 @@ class DomController {
             "name-input",
           ) as HTMLInputElement;
           resolve(input?.value.trim());
+          document.querySelector("form")?.reset();
         },
         { once: true },
       );

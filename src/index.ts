@@ -1,3 +1,5 @@
+import "./Css/styles.css";
+
 import DomController from "./Ui/DomController";
 import GameController from "./Core/GameController";
 
