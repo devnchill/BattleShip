@@ -3,16 +3,18 @@ import GameBoard from "./GameBoard";
 class Player {
   gameBoard: GameBoard;
   name: string;
-  constructor(name = "AI") {
+  constructor(name: string) {
     this.gameBoard = new GameBoard();
     this.name = name;
   }
 }
 
-class Human extends Player {
+class Human extends Player {}
+
+class Ai extends Player {
   constructor() {
-    super(name);
+    super("AI");
   }
 }
 
-class Ai extends Player {}
+export { Human, Ai };

@@ -1,11 +1,11 @@
 import { CellState, ICell } from "../Types/GameBoard.Types";
 
 class DomBoard {
-  board: HTMLDivElement;
+  private board: HTMLDivElement;
 
   constructor() {
     this.board = document.createElement("div");
-    this.board.classList.add("grid-board");
+    this.board.classList.add("domboard");
     this.registerEvents();
   }
 
