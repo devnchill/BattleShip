@@ -9,6 +9,7 @@
     color: white;
   }
 }
+
 html,
 body {
   height: 100%;
@@ -18,6 +19,13 @@ body {
 }
 
 body {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-rows: 5% 1fr 5%;
+
   dialog {
     border: 2px solid white;
     border-radius: 1rem;
@@ -33,12 +41,6 @@ body {
       }
     }
   }
-  display: grid;
-  grid-template-areas:
-    "header"
-    "main"
-    "footer";
-  grid-template-rows: 5% 1fr 5%;
 
   .flex {
     display: flex;
@@ -70,37 +72,47 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    & > .ai-board {
-      cursor: pointer;
-    }
+
     & > .gameboard {
       display: flex;
       flex-direction: column;
       width: 500px;
       height: 500px;
+
       & > .grid-row {
         display: flex;
         justify-content: space-between;
         width: 100%;
         height: 10%;
+
         & > .grid-cell {
           width: 10%;
           height: 100%;
           border: 2px solid white;
         }
-        & > .miss {
-          background-color: red;
-        }
-        & > .untouched {
-          background-color: grey;
-        }
-        & > .ship {
-          background-color: blue;
-        }
-        & > .hit {
-          background-color: green;
-        }
       }
+    }
+
+    /* Hit/Miss override base ship styles naturally */
+    .grid-cell.hit {
+      background-color: green;
+    }
+
+    .grid-cell.miss {
+      background-color: red;
+    }
+
+    .grid-cell.untouched {
+      background-color: grey;
+    }
+
+    /* Ships that are not yet hit/missed */
+    .human-board .grid-cell.ship:not(.hit):not(.miss) {
+      background-color: blue;
+    }
+
+    .ai-board .grid-cell.ship:not(.hit):not(.miss) {
+      background-color: grey;
     }
   }
 
