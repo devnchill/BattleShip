@@ -85,6 +85,18 @@ body {
           height: 100%;
           border: 2px solid white;
         }
+        & > .hit {
+          background-color: green;
+        }
+        & > .miss {
+          background-color: red;
+        }
+        & > .untouched {
+          background-color: grey;
+        }
+        & > .ship {
+          background-color: blue;
+        }
       }
     }
   }

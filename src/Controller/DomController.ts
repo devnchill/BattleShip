@@ -83,8 +83,17 @@ class DomController {
   syncHumanBoard(humanLogicBoard: ICell[][]): void {
     this.humanDomBoard.syncBoard(humanLogicBoard);
   }
+
   syncAiBoard(aiLogicBoard: ICell[][]): void {
     this.aiDomBoard.syncBoard(aiLogicBoard);
+  }
+
+  declareWinner(player: PlayerType): void {
+    if (player === PlayerType.HUMAN) {
+      // create popup saying human won
+    } else {
+      // create popup saying ai won
+    }
   }
 }
 export default DomController;

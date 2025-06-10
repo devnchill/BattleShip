@@ -28,9 +28,9 @@ class DomBoard {
     this.board.classList.add("gameboard");
     if (this.playerType == PlayerType.HUMAN) {
       this.board.classList.add("human-board");
+      this.board.style.pointerEvents = "none";
     } else {
       this.board.classList.add("ai-board");
-      this.board.style.pointerEvents = "none";
     }
     return this.board;
   }

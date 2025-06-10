@@ -10,6 +10,7 @@ import {
 } from "../Core/Ship";
 import { randomCoor } from "../Util/CoorGenerator";
 import ShipOrientation from "../Types/Ship.Types";
+import PlayerType from "../Types/Player.Types";
 
 class GameController {
   private static allShips: Ship[] = [
@@ -21,6 +22,8 @@ class GameController {
   ];
   private human!: Human;
   private ai!: Ai;
+  private currentPlayer!: Human | Ai;
+  private isGameOver = false;
   private dom: DomController;
   constructor() {
     this.dom = new DomController();
@@ -30,12 +33,9 @@ class GameController {
     const playerName = await this.dom.getName();
     this.human = new Human(playerName);
     this.ai = new Ai();
+    this.currentPlayer = this.human;
     this.deployShips();
-    let isGameOver = false;
-    while (!isGameOver) {
-      this.dom.syncBoards(this.human.gameBoard.board, this.ai.gameBoard.board);
-      isGameOver = true;
-    }
+    this.gameLoop();
   }
 
   private deployShips(): void {
@@ -64,6 +64,32 @@ class GameController {
       this.ai.gameBoard.placeShip(ship, randomCoor());
     }
     this.dom.syncAiBoard(this.ai.gameBoard.board);
+  }
+
+  private async gameLoop(): Promise<void> {
+    while (!this.isGameOver) {
+      if (this.currentPlayer == this.human) {
+        // human would click on ai domboard .
+        // get coordinate from aidomboard
+        this.ai.gameBoard.recieveAttach([2, 3]);
+        if (this.ai.gameBoard.areAllShipsSunk()) {
+          this.quitGame(PlayerType.AI);
+        }
+      } else {
+        // randomCoor returns Coordinate;
+        this.human.gameBoard.recieveAttach(randomCoor());
+        if (this.human.gameBoard.areAllShipsSunk()) {
+          this.quitGame(PlayerType.HUMAN);
+        }
+      }
+      // make changes appear visually
+      this.dom.syncBoards(this.human.gameBoard.board, this.ai.gameBoard.board);
+    }
+  }
+
+  private quitGame(player: PlayerType) {
+    this.dom.declareWinner(player);
+    this.isGameOver = true;
   }
 }
 
