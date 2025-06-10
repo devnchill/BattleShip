@@ -129,6 +129,7 @@ body {
           height: 10%;
 
           & > .grid-cell {
+            cursor: pointer;
             width: 10%;
             height: 100%;
             border: 2px solid white;
@@ -155,7 +156,6 @@ body {
 
     .ai-board .grid-cell.ship:not(.hit):not(.miss) {
       background-color: grey;
-      cursor: pointer;
     }
   }
 

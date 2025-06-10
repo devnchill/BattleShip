@@ -98,22 +98,18 @@ class DomController {
 
   getClickedCoordinates(board: HTMLDivElement): Promise<[number, number]> {
     return new Promise((resolve) => {
-      board.addEventListener(
-        "click",
-        (e: Event) => {
-          const target = e.target as HTMLElement;
-          if (!target.classList.contains("grid-cell")) return;
-          const xStr = target.dataset.row;
-          const yStr = target.dataset.column;
-          if (!xStr || !yStr) return;
-          const x = parseInt(xStr);
-          const y = parseInt(yStr);
-          console.log("Clicked DOM Cell:", { x, y });
-          console.log("Target Element:", target);
-          resolve([x, y]);
-        },
-        { once: true },
-      );
+      board.addEventListener("click", (e: Event) => {
+        const target = e.target as HTMLElement;
+        if (!target.classList.contains("grid-cell")) return;
+        const xStr = target.dataset.row;
+        const yStr = target.dataset.column;
+        if (!xStr || !yStr) return;
+        const x = parseInt(xStr);
+        const y = parseInt(yStr);
+        console.log("Clicked DOM Cell:", { x, y });
+        console.log("Target Element:", target);
+        resolve([x, y]);
+      });
     });
   }
 
