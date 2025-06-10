@@ -13,13 +13,15 @@ import ShipOrientation from "../Types/Ship.Types";
 import PlayerType from "../Types/Player.Types";
 
 class GameController {
-  private static allShips: Ship[] = [
-    new Cruiser(),
-    new Carrier(),
-    new Battleship(),
-    new Destroyer(),
-    new Submarine(),
-  ];
+  private static getFreshShips(): Ship[] {
+    return [
+      new Cruiser(),
+      new Carrier(),
+      new Battleship(),
+      new Destroyer(),
+      new Submarine(),
+    ];
+  }
   private human!: Human;
   private ai!: Ai;
   private currentPlayer!: Human | Ai;
@@ -35,7 +37,7 @@ class GameController {
     this.ai = new Ai();
     this.currentPlayer = this.human;
     this.deployShips();
-    this.gameLoop();
+    await this.gameLoop();
   }
 
   private deployShips(): void {
@@ -45,7 +47,7 @@ class GameController {
 
   private deployHumanShips(): void {
     this.human.gameBoard.resetLogicalBoard();
-    for (const ship of GameController.allShips) {
+    for (const ship of GameController.getFreshShips()) {
       ship.orientation =
         Math.random() < 0.5
           ? ShipOrientation.HORIZONTAL
@@ -60,34 +62,57 @@ class GameController {
 
   private deployAiShips(): void {
     this.ai.gameBoard.resetLogicalBoard();
-    for (const ship of GameController.allShips) {
-      this.ai.gameBoard.placeShip(ship, randomCoor());
+    for (const ship of GameController.getFreshShips()) {
+      ship.orientation =
+        Math.random() < 0.5
+          ? ShipOrientation.HORIZONTAL
+          : ShipOrientation.VERTICAL;
+      let placed = false;
+      while (!placed) {
+        placed = this.ai.gameBoard.placeShip(ship, randomCoor());
+      }
     }
     this.dom.syncAiBoard(this.ai.gameBoard.board);
   }
 
+  private switchTurns(): void {
+    this.currentPlayer =
+      this.currentPlayer === this.human ? this.ai : this.human;
+  }
+
   private async gameLoop(): Promise<void> {
+    const humanDomBoard = document.querySelector(
+      ".human-board",
+    ) as HTMLDivElement;
+    if (!humanDomBoard) {
+      throw new Error("Human Board not found in gameLoop");
+    }
+    const aiDomBoard = document.querySelector(".ai-board") as HTMLDivElement;
+    if (!aiDomBoard) {
+      throw new Error("ai Board not found in gameLoop");
+    }
     while (!this.isGameOver) {
       if (this.currentPlayer == this.human) {
-        // human would click on ai domboard .
-        // get coordinate from aidomboard
-        this.ai.gameBoard.recieveAttach([2, 3]);
+        const coor = await this.dom.getClickedCoordinates(aiDomBoard);
+        this.ai.gameBoard.receiveAttach(coor);
         if (this.ai.gameBoard.areAllShipsSunk()) {
-          this.quitGame(PlayerType.AI);
+          this.quitGame(PlayerType.HUMAN);
         }
       } else {
         // randomCoor returns Coordinate;
-        this.human.gameBoard.recieveAttach(randomCoor());
+        this.human.gameBoard.receiveAttach(randomCoor());
         if (this.human.gameBoard.areAllShipsSunk()) {
-          this.quitGame(PlayerType.HUMAN);
+          this.quitGame(PlayerType.AI);
         }
       }
       // make changes appear visually
       this.dom.syncBoards(this.human.gameBoard.board, this.ai.gameBoard.board);
+      this.switchTurns();
     }
   }
 
   private quitGame(player: PlayerType) {
+    console.log(player + "wins");
     this.dom.declareWinner(player);
     this.isGameOver = true;
   }

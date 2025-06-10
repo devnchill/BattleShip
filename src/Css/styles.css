@@ -70,6 +70,9 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    & > .ai-board {
+      cursor: pointer;
+    }
     & > .gameboard {
       display: flex;
       flex-direction: column;
@@ -85,9 +88,6 @@ body {
           height: 100%;
           border: 2px solid white;
         }
-        & > .hit {
-          background-color: green;
-        }
         & > .miss {
           background-color: red;
         }
@@ -96,6 +96,9 @@ body {
         }
         & > .ship {
           background-color: blue;
+        }
+        & > .hit {
+          background-color: green;
         }
       }
     }
