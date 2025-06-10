@@ -13,6 +13,7 @@ import ShipOrientation from "../Types/Ship.Types";
 import PlayerType from "../Types/Player.Types";
 
 class GameController {
+  private playerName?: string;
   private static getFreshShips(): Ship[] {
     return [
       new Cruiser(),
@@ -32,8 +33,9 @@ class GameController {
   }
 
   async start(): Promise<void> {
-    const playerName = await this.dom.getName();
-    this.human = new Human(playerName);
+    this.playerName = await this.dom.getName();
+    this.dom.setName(this.playerName);
+    this.human = new Human(this.playerName);
     this.ai = new Ai();
     this.currentPlayer = this.human;
     this.deployShips();
@@ -113,7 +115,7 @@ class GameController {
 
   private quitGame(player: PlayerType) {
     console.log(player + "wins");
-    this.dom.declareWinner(player);
+    this.dom.declareWinner(player, this.playerName);
     this.isGameOver = true;
   }
 }

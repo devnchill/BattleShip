@@ -19,11 +19,44 @@
         <button type="submit">START</button>
       </form>
     </dialog>
-    <header class="flex">
-      <h1>BattleShip</h1>
-      <i class="fa-solid fa-volume-xmark fa-2xl music-toggle-icon"></i>
+
+    <dialog id="winner-dialog">
+      <p id="winner-text"></p>
+      <button id="play-again">Play Again</button>
+    </dialog>
+
+    <dialog id="help-dialog">
+      <div class="help-content">
+        <h2>Help Menu</h2>
+        <p>Welcome to Battleship!</p>
+        <ul>
+          <li>Place your ships on your board before the battle starts.</li>
+          <li>Click on the enemy board to attack their ships.</li>
+          <li>The first player to sink all enemy ships wins.</li>
+        </ul>
+        <h3>Color Guide:</h3>
+        <ul class="color-guide">
+          <li>
+            <span class="color-box green"></span> Green – Ship present and hit
+          </li>
+          <li><span class="color-box blue"></span> Blue – Ship present</li>
+          <li><span class="color-box red"></span> Red – Missed shot</li>
+          <li><span class="color-box grey"></span> Grey – Untouched cell</li>
+        </ul>
+        <button id="close-help">Close</button>
+      </div>
+    </dialog>
+
+    <header>
+      <div class="title"><h1>BattleShip</h1></div>
+      <div class="icons">
+        <i class="fa-solid help-icon fa-question fa-xl"></i>
+        <i class="fa-solid fa-volume-xmark fa-xl music-toggle-icon"></i>
+      </div>
     </header>
+
     <main></main>
+
     <footer class="flex">
       <p class="big-and-bold">DevNChiill</p>
       <a href="https://github.com/devnchill/BattleShip">

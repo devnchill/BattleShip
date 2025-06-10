@@ -24,7 +24,7 @@ body {
     "header"
     "main"
     "footer";
-  grid-template-rows: 5% 1fr 5%;
+  grid-template-rows: auto 1fr 5%;
 
   dialog {
     border: 2px solid white;
@@ -41,6 +41,33 @@ body {
       }
     }
   }
+  .color-guide {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .color-box {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-right: 0.5em;
+    vertical-align: middle;
+    border: 1px solid #000;
+    border-radius: 3px;
+  }
+
+  .color-box.green {
+    background-color: green;
+  }
+  .color-box.blue {
+    background-color: blue;
+  }
+  .color-box.red {
+    background-color: red;
+  }
+  .color-box.grey {
+    background-color: grey;
+  }
 
   .flex {
     display: flex;
@@ -53,47 +80,63 @@ body {
     font-weight: bolder;
   }
 
-  & > header {
-    grid-area: header;
-    position: relative;
-    & > h1 {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+
+    & > .title {
+      flex: 1;
       text-align: center;
-      border-bottom: 0.3rem solid white;
     }
-    & > i {
-      position: absolute;
-      right: 1rem;
-      cursor: pointer;
+
+    & > .icons {
+      display: flex;
+      gap: 3rem;
     }
   }
 
   & > main {
-    grid-area: main;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 2rem;
 
-    & > .gameboard {
+    & > .board-wrapper {
       display: flex;
       flex-direction: column;
-      width: 500px;
-      height: 500px;
+      align-items: center;
+      justify-content: center;
 
-      & > .grid-row {
+      & > .player-label {
+        font-weight: bold;
+        margin-top: 1rem;
+        font-size: 1.2rem;
+      }
+
+      & > .gameboard {
         display: flex;
-        justify-content: space-between;
-        width: 100%;
-        height: 10%;
+        flex-direction: column;
+        width: 500px;
+        height: 500px;
 
-        & > .grid-cell {
-          width: 10%;
-          height: 100%;
-          border: 2px solid white;
+        & > .grid-row {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          height: 10%;
+
+          & > .grid-cell {
+            width: 10%;
+            height: 100%;
+            border: 2px solid white;
+          }
         }
       }
     }
 
-    /* Hit/Miss override base ship styles naturally */
     .grid-cell.hit {
       background-color: green;
     }
@@ -106,13 +149,13 @@ body {
       background-color: grey;
     }
 
-    /* Ships that are not yet hit/missed */
     .human-board .grid-cell.ship:not(.hit):not(.miss) {
       background-color: blue;
     }
 
     .ai-board .grid-cell.ship:not(.hit):not(.miss) {
       background-color: grey;
+      cursor: pointer;
     }
   }
 

@@ -18,6 +18,8 @@ class DomController {
     this.attachMusicToggle();
     this.placeHumanBoard();
     this.placeAiBoard();
+    this.restartGame();
+    this.attachHelpListener();
   }
 
   async getName(): Promise<string> {
@@ -36,6 +38,14 @@ class DomController {
       );
       dialog?.showModal();
     });
+  }
+
+  setName(name: string) {
+    const humanLabel = document.querySelector(".human-label");
+    if (!humanLabel) {
+      throw new Error("Human Label not found in setName in DomController");
+    }
+    humanLabel.textContent = `${name} (You)`;
   }
 
   private toggleMusic(): void {
@@ -59,20 +69,31 @@ class DomController {
     this.speakerIcon?.addEventListener("click", () => this.toggleMusic());
   }
 
-  private placeAiBoard(): void {
-    if (!DomController.MAIN) {
-      throw new Error("Main Not Found");
-    }
-    DomController.MAIN.appendChild(this.aiDomBoard.createBoard());
-    this.aiDomBoard.resetDomBoard();
+  private placeHumanBoard(): void {
+    if (!DomController.MAIN) throw new Error("Main Not Found");
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("board-wrapper");
+    const label = document.createElement("p");
+    label.classList.add("player-label");
+    label.classList.add("human-label");
+    label.textContent = "Captain (You)";
+    wrapper.appendChild(this.humanDomBoard.createBoard());
+    wrapper.appendChild(label);
+    DomController.MAIN.appendChild(wrapper);
+    this.humanDomBoard.resetDomBoard();
   }
 
-  private placeHumanBoard(): void {
-    if (!DomController.MAIN) {
-      throw new Error("Main Not Found");
-    }
-    DomController.MAIN.appendChild(this.humanDomBoard.createBoard());
-    this.humanDomBoard.resetDomBoard();
+  private placeAiBoard(): void {
+    if (!DomController.MAIN) throw new Error("Main Not Found");
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("board-wrapper");
+    const label = document.createElement("p");
+    label.classList.add("player-label");
+    label.textContent = "Enemy AI";
+    wrapper.appendChild(this.aiDomBoard.createBoard());
+    wrapper.appendChild(label);
+    DomController.MAIN.appendChild(wrapper);
+    this.aiDomBoard.resetDomBoard();
   }
 
   getClickedCoordinates(board: HTMLDivElement): Promise<[number, number]> {
@@ -109,12 +130,50 @@ class DomController {
     this.aiDomBoard.syncBoard(aiLogicBoard);
   }
 
-  declareWinner(player: PlayerType): void {
-    if (player === PlayerType.HUMAN) {
-      // create popup saying human won
-    } else {
-      // create popup saying ai won
+  declareWinner(player: PlayerType, name: string): void {
+    const dialog = document.getElementById(
+      "winner-dialog",
+    ) as HTMLDialogElement;
+    const text = document.getElementById("winner-text");
+    if (!text) {
+      throw new Error(
+        "Winner text not found when looking to display winner in declareWinner method of DomController",
+      );
     }
+    if (player === PlayerType.HUMAN) {
+      text.textContent = `🏆 Captain ${name}, You Won`;
+    } else {
+      text.textContent = `💥 AI Conquered the Seas Try Again.`;
+    }
+    dialog.showModal();
+  }
+
+  private restartGame(): void {
+    const restartButton = document.getElementById("play-again");
+    restartButton?.addEventListener("click", () => window.location.reload());
+  }
+
+  private showHelpMenu(): void {
+    const helpDialog = document.getElementById(
+      "help-dialog",
+    ) as HTMLDialogElement;
+    const closeBtn = document.getElementById("close-help");
+    if (!helpDialog || !closeBtn) {
+      throw new Error("Help dialog or close button not found");
+    }
+    helpDialog.showModal();
+    closeBtn.addEventListener(
+      "click",
+      () => {
+        helpDialog.close();
+      },
+      { once: true },
+    );
+  }
+
+  attachHelpListener(): void {
+    const helpBtn = document.querySelector(".help-icon");
+    helpBtn?.addEventListener("click", () => this.showHelpMenu());
   }
 }
 export default DomController;
