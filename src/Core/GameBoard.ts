@@ -57,14 +57,18 @@ export default class GameBoard {
    * Handles an attack at a specific coordinate.
    * @param c - The coordinate (row, col) being attacked.
    */
-  receiveAttach(c: Coor): void {
+  receiveAttach(c: Coor): boolean {
     const [row, column] = c;
+    if (this._board[row][column].state != CellState.UNTOUCHED) {
+      return false;
+    }
     if (this._board[row][column].hasShip) {
       this._board[row][column].state = CellState.HIT;
       this._board[row][column].ship?.hit();
     } else {
       this._board[row][column].state = CellState.MISS;
     }
+    return true;
   }
 
   /**

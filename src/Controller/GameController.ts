@@ -95,8 +95,11 @@ class GameController {
     }
     while (!this.isGameOver) {
       if (this.currentPlayer == this.human) {
-        const coor = await this.dom.getClickedCoordinates(aiDomBoard);
-        this.ai.gameBoard.receiveAttach(coor);
+        while (true) {
+          const coor = await this.dom.getClickedCoordinates(aiDomBoard);
+          if (!this.ai.gameBoard.receiveAttach(coor)) continue;
+          break;
+        }
         if (this.ai.gameBoard.areAllShipsSunk()) {
           this.quitGame(PlayerType.HUMAN);
         }
